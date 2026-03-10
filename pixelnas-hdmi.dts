@@ -1,0 +1,59 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    fragment@0 {
+        target = <&hdmi0>;
+        __overlay__ {
+		pinctrl-0 = <&hdmim0_tx0_cec &hdmim0_tx0_hpd &hdmim2_tx0_scl &hdmim2_tx0_sda>;
+		enable-gpios = <>;	// Dummy gpio, real controlled by i2c expander
+		status = "okay";
+        };
+    };
+/*    
+    fragment@1 {
+        target = <&hdptxphy_hdmi0>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+    
+    fragment@2 {
+        target = <&hdmi1>;
+        __overlay__ {
+            status = "disabled";
+        };
+    };
+    
+    fragment@3 {
+        target = <&hdptxphy_hdmi1>;
+        __overlay__ {
+            status = "disabled";
+        };
+    };
+
+    fragment@4 {
+        target = <&display_subsystem>;
+        __overlay__ {
+		clocks = <&hdptxphy_hdmi0>;
+      		clock-names = "hdmi0_phy_pll";
+       };
+   };
+
+    fragment@5 {
+        target = <&hdmirx_ctrler>;
+        __overlay__ {
+            status = "disabled";
+       };
+   };
+
+    fragment@6 {
+        target-path = "/";
+        __overlay__ {
+            hdmi0_sound: hdmi0-sound {
+		status = "disabled";
+		};
+       };
+   };
+*/
+};

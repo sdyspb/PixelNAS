@@ -1,0 +1,26 @@
+/dts-v1/;
+/plugin/;
+/ {
+	fragment@0 {
+		target = <&pinctrl>;
+		__overlay__ {
+			pcie_x4_clkreg_wake {
+				pcie30x4_clkreqn_m0: pcie30x4-clkreqn-m0 {
+					rockchip,pins = <0 22 0 &pcfg_pull_up>;
+				};
+				pcie30x4_waken_m2: pcie30x4-waken-m2 {
+					rockchip,pins = <3 21 0 &pcfg_pull_up>;	// GPIO3_C5_U
+				};
+			};
+		};
+	};
+	fragment@1 {
+		target = <&pcie3x4>;
+		__overlay__ {
+			pinctrl-0 = <&pcie30x4_clkreqn_m0 &pcie30x4_waken_m2>;
+			reset-gpios = <&gpio3 22 0>; 				// GPIO3_C6_U ACTIVE_HIGH
+			rockchip,init-delay-ms = <100>;
+			status = "okay";					// M-key
+		};
+	};
+};

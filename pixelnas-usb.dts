@@ -1,0 +1,62 @@
+/dts-v1/;
+/plugin/;
+/ {
+	fragment@0 {
+		target = <&pinctrl>;
+		__overlay__ {
+			usb_en_oc {
+				usb20_host: usb20-host {
+					rockchip,pins = <0 18 0 &pcfg_pull_none>;
+				};
+			};
+		};
+	};
+	fragment@1 {
+		target-path = "/vbus5v0-typec";
+		__overlay__ {
+			gpio = <&gpio0 18 0>;	// GPIO0_C2
+			pinctrl-0 = <&usb20_host>;
+			regulator-name = "vbus5v0_usb20_host";
+			regulator-always-on;	// Turn on
+		};
+	};
+	fragment@2 {
+		target = <&u2phy1_otg>;
+		__overlay__ {
+			/delete-property/ phy-supply;
+			rockchip,typec-vbus-det;
+		};
+	};
+	fragment@3 {
+		target = <&u2phy2_host>;
+		__overlay__ {
+			phy-supply = <&vcc5v0_sys>;
+		};
+	};
+	fragment@4 {
+		target = <&u2phy3_host>;
+		__overlay__ {
+			phy-supply = <&vcc5v0_sys>;
+		};
+	};
+	fragment@5 {
+		target-path = "/";
+		__overlay__ {
+			/delete-node/ vcc5v0-host;
+		};
+	};
+	fragment@6 {
+		target = <&i2c6>;
+		__overlay__ {
+			/delete-node/ fusb302@22;
+		};
+	};
+	fragment@7 {
+		target-path = "/";
+		__overlay__ {
+			/delete-node/ vbus5v0-typec;
+			/delete-node/ vcc5v0-usb;
+			/delete-node/ vcc5v0-usbdcin;
+		};
+	};
+};

@@ -1,0 +1,96 @@
+/dts-v1/;
+/plugin/;
+/ {
+	fragment@0 {
+		target = <&uart7>;		// absent
+		__overlay__ {
+			pinctrl-0 = <>;
+			status = "disabled";
+		};
+	};
+	fragment@1 {
+		target-path = "/es8323-sound";	// absent
+		__overlay__ {
+			hp-det-gpio = <>;
+			pinctrl-0 = <>;
+			spk-con-gpio = <>;
+			status = "disabled";
+		};
+	};
+	fragment@2 {
+		target = <&sfc>;		// gmac0 conflict with fspi
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+/*
+	fragment@3 {
+		target-path = "/dp0-sound";
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+*/
+	fragment@4 {
+		target-path = "/";
+		__overlay__ {
+			/delete-node/ vcc3v3-pcie-eth;
+			/delete-node/ wifi-disable-gpio-regulator;
+			/delete-node/ pwm-fan;
+		};
+	};
+	fragment@5 {
+		target = <&pinctrl>;
+		__overlay__ {
+			/delete-node/ hdmirx-det;
+			/delete-node/ hp-det;
+			/delete-node/ leds-rgb;
+			/delete-node/ pcie-wifi-pinctl;
+			/delete-node/ rtl8125-isolate;
+			/delete-node/ sdmmc-pwr;
+			/delete-node/ typec5v-pwren;
+			/delete-node/ usbc0-int;
+		};
+	};
+	fragment@6 {
+		target = <&pwm2>;		// Fan
+		__overlay__ {
+			pinctrl-0 = <>;
+			status = "disabled";
+		};
+	};
+	fragment@7 {
+		target-path = "/wifi-disable-gpio-regulator";
+		__overlay__ {
+			gpio = <>;
+		};
+	};
+	fragment@8 {
+		target = <&usbdp_phy0>;
+		__overlay__ {
+			sbu1-dc-gpios = <>;
+			sbu2-dc-gpios = <>;
+//			status = "disabled"; // HDMI stops if disabled
+		};
+	};
+/*
+	fragment@9 {
+		target = <&i2s0_8ch>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+	fragment@10 {
+		target = <&i2s5_8ch>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+	fragment@11 {
+		target = <&i2s7_8ch>;
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+*/
+};

@@ -1,0 +1,178 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Overlay for enabling a button on GPIO3_A3 (RK_PA3).
+ * The pin has an external pull-up, so the button is active low.
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+//    	metadata {
+//        	title = "GPIO Keys and LED";
+//        	compatible = "rockchip,rk3568";
+//        	description = "Enable a GPIO button, LED and other control";
+//        	exclusive = "GPIO3_A3";
+//    	};
+
+    	fragment@0 {
+        	target = <&pinctrl>;
+        	__overlay__ {
+			/delete-node/ leds;
+
+            		button_config {
+                		button_gpio3_a3_pins: button-gpio3-a3-pins {
+                    		rockchip,pins = <3 3 0 &pcfg_pull_up>;		// PA3, RK_FUNC_GPIO
+                		};
+            		};
+
+            		edp_tp_pwren {
+                		tp_pwr_en: tp-pwr-en {
+                    		rockchip,pins = <3 4 0 &pcfg_pull_up>;		// PA4, RK_FUNC_GPIO
+                		};
+            		};
+
+			heartbeat_gpio {
+				heartbeat_led: heartbeat-led {
+				rockchip,pins = <0 16 0 &pcfg_pull_up>;
+				};
+			};
+			
+			
+	      	};
+    	};
+
+    	fragment@1 {
+        	target-path = "/";
+        	__overlay__ {
+            		gpio-keys {
+                		compatible = "gpio-keys";
+                		pinctrl-names = "default";
+                		pinctrl-0 = <&button_gpio3_a3_pins>;
+                		status = "okay";
+
+                		button-gpio3_a3 {
+                    			label = "GPIO Key A3";
+                    			linux,code = <28>;			// KEY_0 = 11, KEY_ENTER = 28
+                    			gpios = <&gpio3 3 1>;			// PA3, Active Low
+                    			interrupt-parent = <&gpio3>;
+                    			interrupts = <3 2>;			// PA3, IRQ_TYPE_EDGE_FALLING
+                		};
+			};
+		};
+	};
+
+    	fragment@2 {
+        	target-path = "/";
+        	__overlay__ {
+            		gpio-lcd-power {
+                		compatible = "gpio-leds";
+                		pinctrl-names = "default";
+                		pinctrl-0 = <&tp_pwr_en>;
+                		status = "okay";
+
+				lcd-display-power {
+                    			label = "LCD Power Enable";
+                    			gpios = <&gpio3 4 0>;			// PA4, Active High
+					default-state = "on";
+				};
+			};
+		};
+	};
+
+    	fragment@3 {
+        	target-path = "/";
+        	__overlay__ {
+            		gpio-work-led {
+                		compatible = "gpio-leds";
+                		pinctrl-names = "default";
+                		pinctrl-0 = <&heartbeat_led>;
+                		status = "okay";
+
+				work-led {
+					label = "Heartbeat LED";
+					gpios = <&gpio0 16 0>;
+					default-state = "on";
+					linux,default-trigger = "heartbeat";
+				};
+            		};
+        	};
+    	};
+
+    	fragment@4 {
+        	target-path = "/pinctrl/wireless-bluetooth";
+        	__overlay__ {
+			BT,wake_gpio = <&gpio2 31 0>;				// gpio2 D7
+			BT,wake_host_irq = <&gpio3 14 0>;			// gpio3 B5
+        	};
+    	};
+
+/*
+    	fragment@5 {
+        	target-path = "/pinctrl/usb/vcc5v0-host-en";
+        	__overlay__ {
+			rockchip,pins = <0 30 0 &pcfg_pull_none>;		// gpio0 D6: USB3.0 Power Enable External Connectors
+        	};
+    	};
+*/
+    	fragment@6 {
+        	target-path = "/pinctrl/usb/vcc-hub-power-en";
+        	__overlay__ {
+			rockchip,pins = <3 2 0 &pcfg_pull_none>;		// gpio3 A2: USB2.0 Power Enable Internal Connectors
+        	};
+    	};
+
+    	fragment@7 {
+        	target-path = "/pinctrl/usb/vcc-hub-reset-en";
+        	__overlay__ {
+			rockchip,pins = <3 6 0 &pcfg_pull_none>;		// gpio3 A6: USB2.0 HUB Reset
+        	};
+    	};
+
+    	fragment@8 {
+        	target-path = "/pinctrl/usb";
+        	__overlay__ {
+			usb20_host0_pwren: usb20-0host0-pwren {
+				rockchip,pins = <0 29 0 &pcfg_pull_none>;	// gpio0 D5: USB2.0 Power Enable External Connectors
+			};
+        	};
+    	};
+
+/*
+    	fragment@9 {
+        	target-path = "/regulator-vcc5v0-host";
+        	__overlay__ {
+			gpio = <&gpio0 30 0>;
+        	};
+    	};
+*/
+    	fragment@10 {
+        	target-path = "/vcc-hub-power-regulator";
+        	__overlay__ {
+			gpio = <&gpio3 2 0>;
+        	};
+    	};
+
+    	fragment@11 {
+        	target-path = "/vcc-hub-reset-regulator";
+        	__overlay__ {
+			gpio = <&gpio3 6 0>;
+        	};
+    	};
+
+    	fragment@12 {
+        	target-path = "/";
+        	__overlay__ {
+			vcc5v0_usb20_host: regulator-vcc5v0_usb20_host {
+				compatible = "regulator-fixed";
+				regulator-name = "vcc5v0_usb20_host";
+				enable-active-high;
+				gpio = <&gpio0 29 0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&usb20_host0_pwren>;
+				regulator-always-on;
+			};
+				
+        	};
+    	};
+};

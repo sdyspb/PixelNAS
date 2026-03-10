@@ -1,0 +1,38 @@
+/dts-v1/;
+/plugin/;
+/ {
+	fragment@0 {
+		target = <&pcie2x1l0>;
+		__overlay__ {
+			pinctrl-0 = <>;
+			reset-gpios = <&gpio4 12 3>; 	// GPIO4_B4_U 
+			rockchip,init-delay-ms = <100>;
+			status = "okay";		// E-key
+		};
+	};
+	fragment@1 {
+		target = <&sata0>;
+		__overlay__ {
+			status = "disabled";		// SATA -> PCIe Phy0
+		};
+	};
+	fragment@2 {
+		target = <&pcie2x1l1>;
+		__overlay__ {
+			reset-gpios = <&gpio1 29 3>; 	// GPIO1_D5_D 
+			rockchip,init-delay-ms = <100>;
+			vpcie3v3-supply = <&vcc3v3_pcie30>;
+			status = "okay";
+			/delete-node/ pcie@0,0;		// Delete RTL8125
+		};
+	};
+	fragment@3 {
+		target = <&pcie2x1l2>;
+		__overlay__ {
+			reset-gpios = <&gpio1 6 3>; 	// GPIO1_A6_D 
+			rockchip,init-delay-ms = <100>;
+			vpcie3v3-supply = <&vcc3v3_pcie30>;
+			status = "okay";
+		};
+	};
+};

@@ -1,0 +1,46 @@
+/dts-v1/;
+/plugin/;
+/ {
+	fragment@0 {
+		target-path = "/ethernet@fe1b0000/mdio";
+		__overlay__ {
+				compatible = "snps,dwmac-mdio";
+				#address-cells = <0x01>;
+				#size-cells = <0x00>;
+
+				rgmii_phy0: phy@1 {
+					compatible = "ethernet-phy-ieee802.3-c22";
+					reg = <0x1>;
+					status = "okay";
+				};
+		};
+	};
+	fragment@1 {
+		target = <&gmac0>;
+		__overlay__ {
+			phy-mode = "rgmii-rxid";
+			clock_in_out = "output";
+			snps,reset-gpio = <&gpio2 20 3>;
+			snps,reset-active-low;
+			snps,reset-delays-us = <0x00 0x4e20 0x186a0>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&gmac0_miim &gmac0_tx_bus2 &gmac0_rx_bus2 &gmac0_rgmii_clk &gmac0_rgmii_bus>;
+			tx_delay = <0x43>;
+			phy-handle = <&rgmii_phy0>;
+			status = "okay";
+		};
+	};
+    	fragment@2 {
+        	target-path = "/aliases";
+        	__overlay__ {
+            		ethernet0 = "/ethernet@fe1b0000";
+        	};
+    	};
+	fragment@3 {
+		target = <&gmac1>;
+		__overlay__ {
+			snps,reset-gpio = <&gpio3 17 3>;
+			status = "okay";
+		};
+	};
+};

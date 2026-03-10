@@ -1,0 +1,24 @@
+/dts-v1/;
+/plugin/;
+/ {
+	fragment@0 {
+		target = <&pinctrl>;
+		__overlay__ {
+			sd_control {
+				sd_pwr_en: sd-pwr-en {
+					rockchip,pins = <0 27 0 &pcfg_pull_up>;
+				};
+			};
+			/delete-node/ sdmmc;
+		};
+	};
+	fragment@1 {
+		target-path = "/vcc-3v3-sd-s0";
+		__overlay__ {
+			/delete-property/ enable-active-low;
+			enable-active-high;
+			gpios = <&gpio0 27 0>;	// GPIO0_D3_U
+			pinctrl-0 = <&sd_pwr_en>;
+		};
+	};
+};

@@ -1,0 +1,72 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@1 {
+        	target-path = "/";
+		__overlay__ {
+			expander_21: expander-21 {
+				compatible = "gpio-leds";
+				pinctrl-names = "default";
+				pinctrl-0 = <>;
+
+				mipicam-reset0 {
+					label = "mipicam-reset0";
+					gpios = <&pca9555 0 1>;
+					default-state = "on";
+				};
+
+				mipicam-pdn0 {
+					label = "mipicam-pdn0";
+					gpios = <&pca9555 1 1>;
+					default-state = "on";
+				};
+
+				mipicam-reset1 {
+					label = "mipicam-reset1";
+					gpios = <&pca9555 3 1>;
+					default-state = "on";
+				};
+
+				mipicam-pdn1 {
+					label = "mipicam-pdn1";
+					gpios = <&pca9555 4 1>;
+					default-state = "on";
+				};
+
+				lcd1-tp_rst {
+					label = "lcd1-tp-rst";
+					gpios = <&pca9555 6 1>;
+					default-state = "off";
+				};
+
+				lcd1-tp-pwren {
+					label = "lcd1-tp-pwren";
+					gpios = <&pca9555 7 0>;
+					default-state = "off";
+				};
+
+				// 8 and 9 are skipped in chip, but system continues use them
+
+				fan-ctl {
+					label = "fan-ctl";
+					gpios = <&pca9555 8 1>;		// 10 by chip
+					default-state = "on";
+				};
+
+				wk2124-rst {
+					label = "wk2124-rst";		// 11 by chip
+					gpios = <&pca9555 9 1>;
+					default-state = "on";
+				};
+
+				diy-led {
+					label = "diy-led";		// 12 by chip
+					gpios = <&pca9555 10 1>;
+					default-state = "on";
+				};
+			};
+
+    		};
+	};
+};
