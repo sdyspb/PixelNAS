@@ -40,6 +40,18 @@ Main() {
 			echo -e "\033[32marmbianEnv.txt content after modification:\033[0m"
 			cat /boot/armbianEnv.txt
 
+			SetupDisplay
+			
+			SetHostname
+
+			FixConsoleNumber
+
+			InstallToilet
+		;;
+	esac
+} # Main
+
+SetupDisplay() {
 			echo "Compiling ip_display..."
 
 			cp "/tmp/overlay/ip_display.c" "${SDCARD}/tmp/"
@@ -52,15 +64,21 @@ Main() {
 			chroot "$(pwd)" /bin/bash -c "systemctl enable ip-display.service"
 
 			rm -f "${SDCARD}/tmp/ip_display.c"
-			
-			SetHostname
 
-			FixConsoleNumber
 
-			InstallToilet
-		;;
-	esac
-} # Main
+			echo "Compiling ups_display..."
+
+			cp "/tmp/overlay/ups_display.c" "${SDCARD}/tmp/"
+			chroot "$(pwd)" /bin/bash -c "cd /tmp && gcc -static -O2 -o ups_display ups_display.c && mv ups_display /usr/local/bin/"
+
+			echo "Installing systemd unit..."
+			cp "/tmp/overlay/ups-display.service" "${SDCARD}/etc/systemd/system/"
+
+			echo "Enabling ups display service..."
+			chroot "$(pwd)" /bin/bash -c "systemctl enable ups-display.service"
+
+			rm -f "${SDCARD}/tmp/ups_display.c"
+} # SetupDisplay
 
 FixConsoleNumber() {
 ENV_FILE="/boot/armbianEnv.txt"
