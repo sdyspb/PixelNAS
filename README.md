@@ -2,6 +2,8 @@
 
 This repository contains Device Tree overlays and customization scripts for building an Armbian image tailored for the **PixelNAS** device based on the **Firefly AIO-3568J** board.
 
+<img width="1200" height="900" alt="image" src="https://github.com/user-attachments/assets/1be5f9aa-855f-4e27-b147-4aa7a0b5678f" />
+
 The Device Tree sources in this project are based on the **Firefly Station P2** (also known as `rk3568-roc-pc`) project. Station P2 is a single-board computer by Firefly based on the Rockchip RK3568 SoC, with mainline Linux kernel support added in 2023. This provides a solid foundation for enabling various hardware interfaces on the AIO-3568J platform.
 
 These files enable various hardware interfaces and provide a custom SSH login banner. They are designed to be used with Armbian's build system, specifically via the `customize-image.sh` hook.
@@ -93,6 +95,9 @@ To build an Armbian image for the Firefly AIO-3568J including these overlays, ru
 ./compile.sh build BOARD=station-p2 BRANCH=current BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=trixie
 ```
 The customize-image.sh script will be called automatically during the finalization stage and will apply all customizations.
+
+### Resources
+https://pixelnas.com
 
 ### License
 This project is licensed under GPL-2.0 (consistent with Armbian). The base device tree sources are derived from the mainline Linux kernel rk3568-roc-pc.dts.  
