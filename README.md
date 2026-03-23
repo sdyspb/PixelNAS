@@ -1,4 +1,4 @@
-# PixelNAS Overlays for Firefly AIO-3568J
+# PixelNAS firmware
 
 This repository contains Device Tree overlays and customization scripts for building an Armbian image tailored for the **PixelNAS** device based on the **Firefly AIO-3568J** board.
 
@@ -24,7 +24,6 @@ Each overlay activates a specific hardware interface on the Firefly AIO-3568J. T
 | `pixelnas-i2c.dts` | I2C bus |
 | `pixelnas-i2s.dts` | I2S audio interface |
 | `pixelnas-pcie2.dts` | PCIe 2.0 controller |
-| `pixelnas-pcie3.dts` | PCIe 3.0 controller |
 | `pixelnas-sd.dts` | SD card interface |
 | `pixelnas-spi.dts` | SPI bus |
 | `pixelnas-uarts.dts` | UART ports |
