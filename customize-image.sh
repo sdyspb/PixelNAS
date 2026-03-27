@@ -18,7 +18,7 @@ BOARD=$3
 BUILD_DESKTOP=$4
 
 # overlays="smarc3588-i2c smarc3588-gmacs smarc3588-hdmi smarc3588-uarts smarc3588-dis smarc3588-spi smarc3588-i2s smarc3588-pcie2 smarc3588-pcie3 smarc3588-can smarc3588-usb smarc3588-sd smarc3588-leds smarc3588-exp rk3588-gpio1-a4-button"
-overlays="pixelnas-i2c pixelnas-exp pixelnas-gpio-button"
+overlays="pixelnas-i2c pixelnas-exp pixelnas-gpio-button rk3568-sata-fbs"
 
 Main() {
 	case $RELEASE in
@@ -40,11 +40,11 @@ Main() {
 			echo -e "\033[32marmbianEnv.txt content after modification:\033[0m"
 			cat /boot/armbianEnv.txt
 
-			SetupDisplay
+			# SetupDisplay
 			
-			SetHostname
+			# SetHostname
 
-			FixConsoleNumber
+			# FixConsoleNumber
 
 			InstallToilet
 		;;
