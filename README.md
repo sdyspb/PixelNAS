@@ -91,7 +91,7 @@ Build Example
 To build an Armbian image for the Firefly AIO-3568J including these overlays, run from the Armbian build root:
 
 ```bash
-./compile.sh build BOARD=station-p2 BRANCH=current BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=trixie
+./compile.sh build BOARD=pixelnas BRANCH=current BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=trixie
 ```
 The customize-image.sh script will be called automatically during the finalization stage and will apply all customizations.
 
