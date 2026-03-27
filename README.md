@@ -95,6 +95,14 @@ To build an Armbian image for the Firefly AIO-3568J including these overlays, ru
 ```
 The customize-image.sh script will be called automatically during the finalization stage and will apply all customizations.
 
+### Some RAID tests
+| № | Configuration | RAID | fs | FBS | NCQ | Write (MiB/s) | Read (MiB/s) |
+|---|--------------|---------|----|-----|-----|----------------|----------------|
+| 1 | no FBS | mdadm RAID10 | ext4 | off | off | 24,3 | 1389 |
+| 2 | FBS, NCQ on | Btrfs RAID10 | btrfs | on  | on  | 97,4 | 1111 |
+| 3 | FBS, NCQ off | Btrfs RAID10 | btrfs | on  | off | 97,5 | 820  |
+| 4 | RAID6 (5 ssd) | mdadm RAID6 | ext4 | on  | on  | 151  | 833  |
+
 ### Resources
 https://pixelnas.com
 
