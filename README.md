@@ -1,17 +1,17 @@
 # PixelNAS firmware
 
-This repository contains Device Tree overlays and customization scripts for building an Armbian image tailored for the **PixelNAS** device based on the **Firefly AIO-3568J** board.
+This repository contains Device Tree overlays and customization scripts for building an Armbian image tailored for the **PixelNAS** mobile storage device.
 
 <img width="1200" height="900" alt="image" src="https://github.com/user-attachments/assets/1be5f9aa-855f-4e27-b147-4aa7a0b5678f" />
 
-The Device Tree sources in this project are based on the **Firefly Station P2** (also known as `rk3568-roc-pc`) project. Station P2 is a single-board computer by Firefly based on the Rockchip RK3568 SoC, with mainline Linux kernel support added in 2023. This provides a solid foundation for enabling various hardware interfaces on the AIO-3568J platform.
+The Device Tree sources in this project are based on the **Station P2** (also known as `rk3568-roc-pc`) project. This provides a solid foundation for enabling various hardware interfaces on the AIO-3568J platform.
 
 These files enable various hardware interfaces and provide a custom SSH login banner. They are designed to be used with Armbian's build system, specifically via the `customize-image.sh` hook.
 
 ## File Descriptions
 
 ### Device Tree Overlays (`.dts` files)
-Each overlay activates a specific hardware interface on the Firefly AIO-3568J. These overlays extend the base Station P2 device tree with PixelNAS-specific functionality. Place these files in the Armbian build overlay directory.
+Each overlay activates a specific hardware interface on the AIO-3568J. These overlays extend the base device tree with PixelNAS-specific functionality. Place these files in the Armbian build overlay directory.
 
 | File | Purpose |
 |------|---------|
@@ -129,6 +129,43 @@ If you encounter Git worktree errors, run
 rm -rf cache/git-bare/u-boot cache/sources/u-boot
 ```
 and retry...
+
+### Summary: Fixing SATA Performance on PixelNAS (RK3568)
+The AHCI controller supports FBS (FIS‑based switching) but was not enabling it, causing severe performance degradation.
+
+Two options:
+
+ **- Legacy mode (no FBS)** – disable NCQ to avoid instability.
+  - Add ```libata.force=noncq``` to /boot/armbianEnv.txt
+
+ **- Enable FBS** – requires a device‑tree overlay to set the FBS bit (bit 22, value 0x400000).
+  - Apply the overlay (via armbian-add-overlay or rebuild)
+  - NCQ can be kept enabled or disabled by force directive
+
+```Overlay example:
+dts
+/dts-v1/;
+/plugin/;
+/ {
+    fragment@0 {
+        target-path = "/sata@fc800000";
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            sata-port@0 {
+                reg = <0>;
+                hba-port-cap = <0x400000>;
+                phys = <&combphy2 1>;
+                phy-names = "sata-phy";
+                snps,rx-ts-max = <32>;
+                snps,tx-ts-max = <32>;
+            };
+        };
+    };
+};
+```
+**Universal approach:**
+Enable FBS and NCQ by default in the image; NCQ can be turned off with the simple kernel parameter if needed.
 
 ### Resources
 https://pixelnas.com
