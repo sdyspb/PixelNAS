@@ -103,6 +103,33 @@ The customize-image.sh script will be called automatically during the finalizati
 | 3 | FBS, NCQ off | Btrfs RAID10 | btrfs | on  | off | 97,5 | 820  |
 | 4 | RAID6 (5 ssd) | mdadm RAID6 | ext4 | on  | on  | 151  | 833  |
 
+### Quick Guide: Updating U-Boot in Armbian Build
+Edit board configuration
+Open config/boards/pixelnas.csc and set:
+
+```bash
+BOOTBRANCH_BOARD="tag:v2026.01"          # or branch:master
+BOOTCONFIG="generic-rk3568_defconfig"
+```
+Remove any old UBOOT_CONFIG lines.
+
+Clean cached U-Boot sources
+```bash
+rm -rf cache/git-bare/u-boot cache/sources/u-boot output/.artifacts/
+```
+Build the image - see the example above
+
+**Notes**
+Verify that the chosen defconfig exists in the new U-Boot tree (you can check after first fetch:
+```bash
+ls cache/sources/u-boot/v2026.01/configs/ | grep <defconfig>).
+```
+If you encounter Git worktree errors, run
+```bash
+rm -rf cache/git-bare/u-boot cache/sources/u-boot
+```
+and retry...
+
 ### Resources
 https://pixelnas.com
 
