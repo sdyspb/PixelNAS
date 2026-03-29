@@ -4,14 +4,14 @@ This repository contains Device Tree overlays and customization scripts for buil
 
 <img width="1200" height="900" alt="image" src="https://github.com/user-attachments/assets/1be5f9aa-855f-4e27-b147-4aa7a0b5678f" />
 
-The Device Tree sources in this project are based on the **Station P2** (also known as `rk3568-roc-pc`) project. This provides a solid foundation for enabling various hardware interfaces on the AIO-3568J platform.
+The Device Tree sources in this project are based on the `rk3568-roc-pc` project. This provides a solid foundation for enabling various hardware interfaces on the AIO-3568J platform.
 
 These files enable various hardware interfaces and provide a custom SSH login banner. They are designed to be used with Armbian's build system, specifically via the `customize-image.sh` hook.
 
 ## File Descriptions
 
 ### Device Tree Overlays (`.dts` files)
-Each overlay activates a specific hardware interface on the AIO-3568J. These overlays extend the base device tree with PixelNAS-specific functionality. Place these files in the Armbian build overlay directory.
+Each overlay activates a specific hardware interfac. These overlays extend the base device tree with PixelNAS-specific functionality. Place these files in the Armbian build overlay directory.
 
 | File | Purpose |
 |------|---------|
@@ -87,11 +87,17 @@ userpatches/
         └── update-motd.d/
             └── 10-header
 ```
-Build Example
-To build an Armbian image for the Firefly AIO-3568J including these overlays, run from the Armbian build root:
+### Build Example
+To build an image including these overlays, run from the Armbian build root:
 
 ```bash
 ./compile.sh build BOARD=pixelnas BRANCH=current BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=trixie
+```
+To build the image with [Openmediavault](https://www.openmediavault.org/):
+ - place [omv extension](https://github.com/armbian/os/blob/main/userpatches/extensions/omv.sh) to /extensions
+ - add ENABLE_EXTENSIONS=omv to directive and run:
+```bash
+./compile.sh build BOARD=pixelnas BRANCH=current BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=trixie ENABLE_EXTENSIONS=omv
 ```
 The customize-image.sh script will be called automatically during the finalization stage and will apply all customizations.
 
