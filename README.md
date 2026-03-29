@@ -4,7 +4,7 @@ This repository contains Device Tree overlays and customization scripts for buil
 
 <img width="1200" height="900" alt="image" src="https://github.com/user-attachments/assets/1be5f9aa-855f-4e27-b147-4aa7a0b5678f" />
 
-The Device Tree sources in this project are based on the `rk3568-roc-pc` project. This provides a solid foundation for enabling various hardware interfaces on the AIO-3568J platform.
+The Device Tree sources in this project are based on the `rk3568-roc-pc` project. This provides a solid foundation for enabling various hardware interfaces on the [AIO-3568J](https://en.t-firefly.com/product/industry/aio3568j) platform and custom module with 5x M.2 SATA or 4x M.2 SATA and integrated UPS module.
 
 These files enable various hardware interfaces and provide a custom SSH login banner. They are designed to be used with Armbian's build system, specifically via the `customize-image.sh` hook.
 
