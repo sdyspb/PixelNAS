@@ -18,7 +18,6 @@ Each overlay activates a specific hardware interfac. These overlays extend the b
 | `pixelnas-exp.dts` | GPIO expander |
 | `pixelnas-gpio-butt.dts` | GPIO‑connected buttons |
 | `pixelnas-i2c.dts` | I2C bus |
-| `pixelnas-spi.dts` | SPI bus |
 | `rk3568-sata-fbs.dts` | SATA new kernel support |
 
 ### Customization Script
