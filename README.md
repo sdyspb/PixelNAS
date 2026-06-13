@@ -78,7 +78,6 @@ userpatches/
     ├── pixelnas-i2c.dts
     ├── pixelnas-i2s.dts
     ├── pixelnas-pcie2.dts
-    ├── pixelnas-pcie3.dts
     ├── pixelnas-sd.dts
     ├── pixelnas-spi.dts
     ├── pixelnas-uarts.dts
