@@ -15,19 +15,11 @@ Each overlay activates a specific hardware interfac. These overlays extend the b
 
 | File | Purpose |
 |------|---------|
-| `pixelnas-can.dts` | CAN bus interface |
-| `pixelnas-dis.dts` | Disable unused nodes |
 | `pixelnas-exp.dts` | GPIO expander |
-| `pixelnas-gmacs.dts` | Gigabit Ethernet controllers (GMAC) |
 | `pixelnas-gpio-butt.dts` | GPIO‑connected buttons |
-| `pixelnas-hdmi.dts` | HDMI output |
 | `pixelnas-i2c.dts` | I2C bus |
-| `pixelnas-i2s.dts` | I2S audio interface |
-| `pixelnas-pcie2.dts` | PCIe 2.0 controller |
-| `pixelnas-sd.dts` | SD card interface |
 | `pixelnas-spi.dts` | SPI bus |
-| `pixelnas-uarts.dts` | UART ports |
-| `pixelnas-usb.dts` | USB ports |
+| `rk3568-sata-fbs.dts` | SATA new kernel support |
 
 ### Customization Script
 - **`customize-image.sh`** – This script is executed automatically during the Armbian build process. It copies the overlays to the appropriate directories, enables them, and installs the custom SSH banner.
@@ -65,23 +57,14 @@ cp /tmp/overlay/10-header /etc/update-motd.d/
 (The /tmp/overlay directory contains the contents of userpatches/overlay during the build.)
 
 ### Example Directory Structure (Option A)
-```text
+``text
 userpatches/
 ├── customize-image.sh
 └── overlay/
-    ├── pixelnas-can.dts
-    ├── pixelnas-dis.dts
     ├── pixelnas-exp.dts
-    ├── pixelnas-gmacs.dts
     ├── pixelnas-gpio-butt.dts
-    ├── pixelnas-hdmi.dts
     ├── pixelnas-i2c.dts
-    ├── pixelnas-i2s.dts
-    ├── pixelnas-pcie2.dts
-    ├── pixelnas-sd.dts
-    ├── pixelnas-spi.dts
-    ├── pixelnas-uarts.dts
-    ├── pixelnas-usb.dts
+    ├── rk3568-sata-fbs.dts
     └── etc/
         └── update-motd.d/
             └── 10-header
