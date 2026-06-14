@@ -56,7 +56,7 @@ cp /tmp/overlay/10-header /etc/update-motd.d/
 (The /tmp/overlay directory contains the contents of userpatches/overlay during the build.)
 
 ### Example Directory Structure (Option A)
-``text
+```text
 userpatches/
 ├── customize-image.sh
 └── overlay/
