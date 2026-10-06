@@ -156,6 +156,7 @@ Enable FBS and NCQ by default in the image; NCQ can be turned off with the simpl
 
 ### Resources
 https://pixelnas.com
+https://github.com/sdyspb/wk2xxx-spi-4x-uart-driver.git - Adding two external and two internal RS485 interfaces. Support on-board WK21xx chip by overlay.
 
 ### License
 This project is licensed under GPL-2.0 (consistent with Armbian). The base device tree sources are derived from the mainline Linux kernel rk3568-roc-pc.dts.  
