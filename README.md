@@ -156,6 +156,7 @@ Enable FBS and NCQ by default in the image; NCQ can be turned off with the simpl
 
 ### Resources
 https://pixelnas.com
+
 https://github.com/sdyspb/wk2xxx-spi-4x-uart-driver.git - Adding two external and two internal RS485 interfaces. Support on-board WK21xx chip by overlay.
 
 ### License
